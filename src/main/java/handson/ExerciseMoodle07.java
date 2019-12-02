@@ -34,18 +34,11 @@ public class ExerciseMoodle07 {
 
             final String email = String.format("%s@oskar.com", UUID.randomUUID().toString());
             final String password = "password";
-            final CompletionStage<CustomerSignInResult> customerCreationResult = customerService.createCustomer(email, password);
+            final CustomerSignInResult customerCreationResult = customerService.createCustomer(email, password)
+                    .toCompletableFuture().get();
+            System.out.println(email);
 
-            final CompletableFuture<CustomerToken> customerTokenResult = customerCreationResult
-                    .thenComposeAsync(customerSignInResult ->
-                            customerService.createEmailVerificationToken(customerSignInResult.getCustomer(), 30))
-                    .toCompletableFuture();
-            final CustomerToken customerToken = customerTokenResult.get();
-
-            final CompletableFuture<Customer> verifyEmailResult = customerService.verifyEmail(customerToken)
-                    .toCompletableFuture();
-            final Customer customerSignInResult = verifyEmailResult.get();
-            LOG.info("Registered customer {}", customerSignInResult);
+            LOG.info("Registered customer {}", customerCreationResult);
         }
     }
 }

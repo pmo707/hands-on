@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
@@ -33,22 +35,25 @@ public class ExerciseMoodle08 {
 
             // Part 1: TODO: Register and verify a second customer
             //
-            final String email = "YOUR-NAME-2@example.com";
+            final String email = String.format("%s@oskar.com", UUID.randomUUID().toString());
             final String password = "password";
+            final Customer customerCreationResult = customerService.createCustomer(email, password)
+                    .thenComposeAsync(customerSignInResult ->
+                            customerService.createEmailVerificationToken(customerSignInResult.getCustomer(), 30))
+                    .thenComposeAsync(customerService::verifyEmail).toCompletableFuture().get();
 
-            final Customer customer = customerService.createCustomer(email, password).toCompletableFuture()
-                    .get().getCustomer();
-
-
-
-            LOG.info("Registered customer {}", customer);
 
             // Part 2: TODO: Verify now also the first customer from MoodleExercise07 (previous task)
             // Problem: We have no key to get the customer.
             // Solution: Get the id from URL in MC or API pülayground
             //
 
-            Customer customerVerified = null;
+            Customer customerVerified = client.execute(CustomerByIdGet.of("a0709e07-42ff-4554-9c23-9faf855b4c01"))
+                    .thenComposeAsync(customer ->
+                            customerService.createEmailVerificationToken(customer, 30))
+                    .thenComposeAsync(customerService::verifyEmail)
+                    .toCompletableFuture()
+                        .get();
             LOG.info("Registered customer {}", customerVerified);
 
 
