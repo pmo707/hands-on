@@ -40,7 +40,9 @@ public class ExerciseMoodle08 {
             final Customer customerCreationResult = customerService.createCustomer(email, password)
                     .thenComposeAsync(customerSignInResult ->
                             customerService.createEmailVerificationToken(customerSignInResult.getCustomer(), 30))
-                    .thenComposeAsync(customerService::verifyEmail).toCompletableFuture().get();
+                    .thenComposeAsync(customerService::verifyEmail)
+                    .toCompletableFuture()
+                    .get();
 
 
             // Part 2: TODO: Verify now also the first customer from MoodleExercise07 (previous task)
@@ -53,7 +55,7 @@ public class ExerciseMoodle08 {
                             customerService.createEmailVerificationToken(customer, 30))
                     .thenComposeAsync(customerService::verifyEmail)
                     .toCompletableFuture()
-                        .get();
+                    .get();
             LOG.info("Registered customer {}", customerVerified);
 
 

@@ -6,6 +6,7 @@ import handson.impl.ProductQueryService;
 import io.sphere.sdk.carts.Cart;
 import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.client.SphereClient;
+import io.sphere.sdk.customers.queries.CustomerByIdGet;
 import io.sphere.sdk.customers.queries.CustomerByKeyGet;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.queries.PagedQueryResult;
@@ -41,9 +42,9 @@ public class ExerciseMoodle16 {
 
 
             final CompletionStage<PagedQueryResult<ProductProjection>> productsOnSaleResult
-                    = productQueryService.findProductsWithCategory(Locale.ENGLISH, "Clothes");
+                    = productQueryService.findProductsWithCategory(Locale.US, "summer");
 
-            final Cart cart = client.execute(CustomerByKeyGet.of("YOUR-CUSTOMER-KEY"))
+            final Cart cart = client.execute(CustomerByIdGet.of("a0709e07-42ff-4554-9c23-9faf855b4c01"))
                     .thenComposeAsync(cartService::createCart)
                     .thenCombineAsync(productsOnSaleResult, (c, p) -> cartService.addProductToCartCommand(p.getResults().get(0), c))
                     .thenComposeAsync(client::execute)

@@ -1,4 +1,4 @@
 productType,productId,inventoryId,articleId,productName,productDescription,basePrice,currencyCode,imageUrl
-wine,P1,SKU101,A101,RedWine,You will look good in this,1123,EUR,https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081455_1_medium.jpg
-wine,P2,SKU102,A102,BlueWine,You will look good in this,1000,EUR,https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081455_1_medium.jpg
-wine,P3,SKU103,A103,GreenWine,You will look good in this,12000,EUR,https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081455_1_medium.jpg
+    wine,P1,SKU101,A101,RedWine,You will look good in this,1123,EUR,https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081455_1_medium.jpg,super deep
+wine,P2,SKU102,A102,BlueWine,You will look good in this,1000,EUR,https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081455_1_medium.jpg,none
+wine,P3,SKU103,A103,GreenWine,You will look good in this,12000,EUR,https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081455_1_medium.jpg,deep

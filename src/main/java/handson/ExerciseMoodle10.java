@@ -77,6 +77,7 @@ public class ExerciseMoodle10 {
         final double basePrice = Double.parseDouble(splitLine[6]);
         final String currencyCode = splitLine[7];
         final String imageUrl = splitLine[8];
+        final String attribute = splitLine[9];
 
 
         final PriceDraftDsl priceDraftDsl = PriceDraftBuilder
@@ -92,6 +93,7 @@ public class ExerciseMoodle10 {
                 .key(variantKey)
                 .sku(sku)
                 .images(image)
+                .plusAttribute("deepness", attribute)
                 .build();
 
         //TODO 10.3 Create a ProductDraft and return it.

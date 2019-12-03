@@ -17,10 +17,10 @@ import static handson.impl.ClientService.createSphereClient;
 
 /**
  * Full text search and term facets search for products.
- *
+ * <p>
  * See:
- *  TODO Task14.1 {@link ProductSearchService#fulltextSearch(LocalizedStringEntry)}
- *  TODO Task14.2 {@link ProductSearchService#facetSearch(String, String)}
+ * TODO Task14.1 {@link ProductSearchService#fulltextSearch(LocalizedStringEntry)}
+ * TODO Task14.2 {@link ProductSearchService#facetSearch(String, String)}
  */
 public class ExerciseMoodle14 {
     private static final Logger LOG = LoggerFactory.getLogger(ExerciseMoodle14.class);
@@ -30,17 +30,16 @@ public class ExerciseMoodle14 {
             final ProductSearchService productSearchService = new ProductSearchService(client);
 
             final CompletableFuture<PagedSearchResult<ProductProjection>> fulltextSearchResult =
-                    productSearchService.fulltextSearch(LocalizedStringEntry.of("en", "Red-wine"))
+                    productSearchService.fulltextSearch(LocalizedStringEntry.of("en-US", "GreenWine"))
                             .toCompletableFuture();
             PagedSearchResult<ProductProjection> foundProducts = fulltextSearchResult.get();
 
             LOG.info("Found products: {}", foundProducts.getTotal());
 
 
-
             final CompletableFuture<PagedSearchResult<ProductProjection>> facetSearchResult =
                     productSearchService.facetSearch("deepness", "super deep")
-                                        .toCompletableFuture();
+                            .toCompletableFuture();
 
             foundProducts = facetSearchResult.get();
             LOG.info("Returned facets: {}", foundProducts.getFacetsResults());

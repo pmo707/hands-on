@@ -28,7 +28,7 @@ public class ProductSearchServiceTest extends BaseTest {
     @Test
     public void fulltextSearch() throws ExecutionException, InterruptedException {
         final CompletableFuture<PagedSearchResult<ProductProjection>> fulltextSearchResult =
-                productSearchService.fulltextSearch(LocalizedStringEntry.of("en", "Cantarelli"))
+                productSearchService.fulltextSearch(LocalizedStringEntry.of("en", "Red-wine"))
                     .toCompletableFuture();
         final PagedSearchResult<ProductProjection> foundProducts = fulltextSearchResult.get();
         assertThat(foundProducts.getResults()).isNotEmpty();

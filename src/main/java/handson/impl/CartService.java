@@ -5,11 +5,15 @@ import io.sphere.sdk.carts.commands.CartCreateCommand;
 import io.sphere.sdk.carts.commands.CartUpdateCommand;
 import io.sphere.sdk.carts.commands.updateactions.AddDiscountCode;
 import io.sphere.sdk.carts.commands.updateactions.AddLineItem;
+import io.sphere.sdk.categories.queries.CategoryQuery;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.customers.Customer;
+import io.sphere.sdk.models.Address;
 import io.sphere.sdk.models.DefaultCurrencyUnits;
 import io.sphere.sdk.products.ProductProjection;
+import io.sphere.sdk.products.commands.ProductUpdateCommand;
 
+import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 /**
@@ -31,8 +35,15 @@ public class CartService extends AbstractService {
         // TODO Task15.1. Create a cart
         // Make sure the customer has a default shipping address!!
         //
+        String email = customer.getEmail();
+        CartDraft cartDraft = CartDraft.of(DefaultCurrencyUnits.EUR)
+                .withCustomerEmail(email)
+                .withShippingAddress(customer.getDefaultShippingAddress())
+                .withCustomerId(customer.getId());
 
-        return null;
+        CartCreateCommand cartCreateCommand = CartCreateCommand.of(cartDraft);
+
+        return client.execute(cartCreateCommand);
     }
 
     /**
@@ -45,7 +56,9 @@ public class CartService extends AbstractService {
     public CompletionStage<Cart> addProductToCart(final ProductProjection product, final Cart cart) {
         // TODO Task15.2. Add line item to a cart
 
-        return null;
+        CartUpdateCommand cartUpdateCommand = addProductToCartCommand(product, cart);
+
+        return client.execute(cartUpdateCommand);
     }
 
 
@@ -53,7 +66,8 @@ public class CartService extends AbstractService {
         // TODO 17.2. Add line item to a cart
         // Return Command!!
 
-        return null;
+        return CartUpdateCommand
+                .of(cart, AddLineItem.of(product.getId(), product.getMasterVariant().getId(), 1));
     }
 
 

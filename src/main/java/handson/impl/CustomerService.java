@@ -29,11 +29,9 @@ public class CustomerService extends AbstractService {
 
         final CustomerDraft draft = CustomerDraftDsl.of(email, password);
 
-        final CustomerCreateCommand sphereRequest = CustomerCreateCommand.of(draft);
+            final CustomerCreateCommand sphereRequest = CustomerCreateCommand.of(draft);
 
-        CompletionStage<CustomerSignInResult> completionStage = client.execute(sphereRequest);
-
-        return completionStage;
+        return client.execute(sphereRequest);
 
     }
 

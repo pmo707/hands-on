@@ -5,6 +5,7 @@ import io.sphere.sdk.models.LocalizedStringEntry;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.products.attributes.StringAttributeType;
 import io.sphere.sdk.products.search.ProductProjectionSearch;
+import io.sphere.sdk.products.search.ProductProjectionSearchBuilder;
 import io.sphere.sdk.search.PagedSearchResult;
 
 import java.util.concurrent.CompletionStage;
@@ -27,7 +28,7 @@ public class ProductSearchService extends AbstractService {
     public CompletionStage<PagedSearchResult<ProductProjection>> fulltextSearch(final LocalizedStringEntry searchText) {
         // TODO 14.1 Perform a full-text search
 
-      return null;
+        return client.execute(ProductProjectionSearch.ofCurrent().withText(searchText));
     }
 
     /**
@@ -40,6 +41,11 @@ public class ProductSearchService extends AbstractService {
     public CompletionStage<PagedSearchResult<ProductProjection>> facetSearch(final String attributeName, String attributeValue) {
         // TODO 14.2 Perform a term facet search
 
-        return null;
+        return client.execute(ProductProjectionSearchBuilder
+                .ofCurrent().facets(m -> m.allVariants()
+                        .attribute()
+                        .ofString(attributeName)
+                        .onlyTerm(attributeValue))
+                .build());
     }
 }
