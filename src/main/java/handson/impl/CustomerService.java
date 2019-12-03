@@ -48,8 +48,7 @@ public class CustomerService extends AbstractService {
         // TODO Task08.1 Create an email verification token
         final Command<CustomerToken> createTokenCommand = CustomerCreateEmailTokenCommand.of(customer, timeToLiveInMinutes);
 
-        final CompletionStage<CustomerToken> customerToken = client.execute(createTokenCommand);
-        return customerToken;
+        return client.execute(createTokenCommand);
     }
 
     /**
