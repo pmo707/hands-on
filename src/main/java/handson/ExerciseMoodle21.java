@@ -2,6 +2,8 @@ package handson;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.sun.deploy.ui.FancyButton;
+import io.sphere.sdk.client.JsonNodeSphereRequest;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.customobjects.CustomObject;
 import io.sphere.sdk.customobjects.CustomObjectDraft;
@@ -31,15 +33,18 @@ public class ExerciseMoodle21 {
 
             // TODO: Create some fancy data to store
             //
-            JsonNode jsonNode = null;
+            JsonNode jsonNode = JsonNodeFactory.withExactBigDecimals(true).numberNode(123);
+
 
             // Create a custom object draft
             // Upsert: Update/Insert-command
-            final CustomObject<JsonNode> jsonNodeCustomObject = null;
+            final CustomObjectDraft<JsonNode> customObjectDraft = CustomObjectDraft.ofUnversionedUpsert("CustomObjectContender",
+                    "CustomObjectFirstValue", jsonNode);
+
+            final CustomObject<JsonNode> jsonNodeCustomObject = client.execute(CustomObjectUpsertCommand.of(customObjectDraft)).toCompletableFuture().get();
 
 
             LOG.info("Custom Object info {}", jsonNodeCustomObject);
-
 
 
         }

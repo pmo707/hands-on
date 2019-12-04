@@ -11,20 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 import static handson.impl.ClientService.createSphereClient;
 
 
-
 public class ExerciseMoodle20 {
     private static final Logger LOG = LoggerFactory.getLogger(ExerciseMoodle20.class);
-
-
 
 
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
@@ -32,9 +26,14 @@ public class ExerciseMoodle20 {
 
             // Create a shoe size custom type on customers
 
-            final Type shoeSizeType = null;
-
-            LOG.info("Custom Type info {}", shoeSizeType);
+            TypeDraft typeDraft = TypeDraftBuilder.of("shor",
+                    LocalizedString.of(Locale.US, "shoe size"),
+                    ResourceTypeIdsSetBuilder.of().addCustomers())
+                    .fieldDefinitions(Arrays.asList(FieldDefinition.of(NumberFieldType.of(), "shoe-size",
+                            LocalizedString.of(Locale.US, "shoe size"), true, TextInputHint.SINGLE_LINE)))
+                    .build();
+            TypeCreateCommand typeCreateCommand = TypeCreateCommand.of(typeDraft);
+            client.execute(typeCreateCommand).toCompletableFuture().get();
 
 
         }
