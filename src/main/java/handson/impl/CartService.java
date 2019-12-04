@@ -81,6 +81,6 @@ public class CartService extends AbstractService {
     public CompletionStage<Cart> addDiscountToCart(final String code, final Cart cart) {
         // TODO 18.1 Add discount code to cart
 
-        return null;
+        return client.execute(CartUpdateCommand.of(cart, AddDiscountCode.of(code)));
     }
 }

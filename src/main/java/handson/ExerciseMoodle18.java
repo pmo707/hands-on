@@ -6,6 +6,7 @@ import handson.impl.OrderService;
 import handson.impl.ProductQueryService;
 import io.sphere.sdk.carts.Cart;
 import io.sphere.sdk.client.SphereClient;
+import io.sphere.sdk.customers.queries.CustomerByIdGet;
 import io.sphere.sdk.customers.queries.CustomerByKeyGet;
 import io.sphere.sdk.orders.Order;
 import io.sphere.sdk.orders.OrderState;
@@ -23,9 +24,9 @@ import static handson.impl.ClientService.createSphereClient;
 
 /**
  * Create a cart for a customer, add a product to it, create an order from the cart and change the order state.
- *
+ * <p>
  * See:
- *  TODO Task18.1 {@link CartService#addDiscountToCart(String, Cart)}}
+ * TODO Task18.1 {@link CartService#addDiscountToCart(String, Cart)}}
  */
 public class ExerciseMoodle18 {
     private static final Logger LOG = LoggerFactory.getLogger(ExerciseMoodle18.class);
@@ -39,12 +40,16 @@ public class ExerciseMoodle18 {
 
 
             final CompletionStage<ProductProjection> productProjectionCompletionStage
-                    = client.execute(ProductProjectionByKeyGet.ofCurrent("red-wine"));
+                    = client.execute(ProductProjectionByKeyGet.ofCurrent("RedWine"));
 
             // Create and update an order
             // Use a customer you can get by key
             // Add a discount code to it
-            final Cart cartWithCode = null;
+            final Cart cartWithCode = client.execute(CustomerByIdGet.of("feadde32-6300-4bbd-a0b2-11b97d2457ba"))
+                    .thenComposeAsync(cartService::createCart)
+                    .thenComposeAsync(cart -> cartService.addDiscountToCart("12345", cart))
+                    .toCompletableFuture().get();
+
 
             LOG.info("Created order {}", cartWithCode);
 
