@@ -26,7 +26,7 @@ public class ExerciseMoodle25 {
 
 
 
-            String jsonString_SimpleRequest = "{\"query\": \"query COPY_FROM_GRAPH-QL-PLAYGROUND\", \"variables\": { } }";
+            String jsonString_SimpleRequest = "{\"query\": \"query ($sku: String!) {product(sku: $sku) {id version}}\", \"variables\": {\"sku\": \"pihnastyi-SKU101\"} }";
 
             final JsonNode jsonNodeBody = new ObjectMapper().readTree(jsonString_SimpleRequest);
             final JsonNode jsonNodeAnswer = client.execute(JsonNodeSphereRequest.of(HttpMethod.POST,
@@ -34,7 +34,6 @@ public class ExerciseMoodle25 {
                     jsonNodeBody)).toCompletableFuture().get();
 
             LOG.info("JSON answer is {} ", jsonNodeAnswer);
-
 
         }
     }
